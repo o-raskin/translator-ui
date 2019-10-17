@@ -16,12 +16,12 @@
             </v-flex>
             <v-container fluid>
                 <v-row>
-                    <v-col cols="12" md="6">
-                        <v-textarea outlined name="input-7-4" auto-grow label="Russian" value="" v-model="inputText"
-                        ></v-textarea>
+                    <v-col class="mb-0 pb-0" cols="12" md="6">
+                        <v-textarea background-color="white" outlined name="input-7-4" auto-grow label="Russian" value=""
+                                    counter="true" v-model="inputText" clearable="true"></v-textarea>
                     </v-col>
                     <v-col cols="12" md="6">
-                        <v-textarea outlined name="input-7-4" auto-grow label="Italian" contenteditable="false" value="123"
+                        <v-textarea background-color="white" outlined name="input-7-4" auto-grow label="Italian" contenteditable="false" disabled
                                     v-model="resultText"></v-textarea>
                     </v-col>
                 </v-row>
