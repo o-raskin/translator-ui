@@ -26,6 +26,6 @@
             Footer
         },
         data: () => ({})
-    };
+    }
 
 </script>
