@@ -3,30 +3,38 @@
         <v-layout text-center wrap>
             <v-flex id="message-alert" mt-5>
                 <v-row align="center" justify="center">
-                    <v-alert v-if="inputText === '' && resultText === ''" dense type="info" min-width="10%"
+                    <v-alert v-if="inputText.length === 0 && resultText.length === 0" dense type="info" min-width="10%"
                              max-width="60%">
-                        Just write something...
+                        {{phrase[0]}}
                     </v-alert>
-                    <v-alert v-else-if="resultText !== ''" dense type="success" min-width="30%" max-width="50%">
-                        We have some translation for you!
+                    <v-alert v-else-if="resultText.length !== 0" dense type="success" min-width="30%" max-width="50%">
+                        {{phrase[1]}}
                     </v-alert>
-                    <v-alert v-else-if="inputText !== '' && resultText === ''" dense type="info" min-width="10%"
+                    <v-alert v-else-if="inputText.length !== 0 && resultText.length === 0" dense type="info" min-width="10%"
                              max-width="40%">
-                        Hmmm...
+                        {{phrase[2]}}
                     </v-alert>
                 </v-row>
             </v-flex>
             <v-container fluid>
                 <v-row>
-                    <v-col class="mb-0 pb-0" cols="12" md="6">
-                        <v-textarea id="source" background-color="white" outlined name="input-7-4" auto-grow
-                                    label="Russian" counter="true" v-model="inputText" clearable v-on:input="translate"
-
-                        ></v-textarea>
+                    <v-col>
+                        <v-btn v-on:click="swap" text icon color="primary">
+                            <v-icon>mdi-swap-horizontal</v-icon>
+                        </v-btn>
                     </v-col>
-                    <v-col cols="12" md="6">
-                        <v-textarea id="result" background-color="white" outlined name="input-7-4" auto-grow
-                                    label="Italian" contenteditable="false" v-model="resultText"></v-textarea>
+                </v-row>
+                <v-row>
+                    <v-col md="6">
+                        <v-textarea id="source" background-color="white" outlined auto-grow
+                                    :label="source.title" counter="true" v-model="inputText" v-on:input="translate"
+                                    :value="source.tag">
+                        </v-textarea>
+                    </v-col>
+                    <v-col md="6">
+                        <v-textarea id="result" background-color="white" outlined auto-grow :label="target.title"
+                                    contenteditable="false" v-model="resultText" :value="target.tag" disabled>
+                        </v-textarea>
                     </v-col>
                 </v-row>
             </v-container>
@@ -38,6 +46,7 @@
 
 <script>
     import axios from 'axios';
+    import _ from 'lodash';
 
     export default {
         name: 'Core',
@@ -46,31 +55,51 @@
         },
         data: () => ({
             inputText: '',
-            resultText: ''
+            resultText: '',
+            source: {
+                title: 'Russian',
+                tag: 'ru'
+            },
+            target: {
+                title: 'Italian',
+                tag: 'it'
+            },
+            phrase: [
+                'Just write something...',
+                'We have some translation for you!',
+                'Hmmm...'
+            ]
         }),
         methods: {
-            translate() {
+            translate: _.debounce(function () {
                 axios.post(
                     `http://localhost:8081/api/translate`,
                     {
-                        source_lang: "ru",
-                        target_lang: "it",
+                        source_lang: this.source.tag,
+                        target_lang: this.target.tag,
                         text: this.inputText
                     })
                     .then((value) => {
                         this.resultText = value.data.translation
                     })
-            }
-        },
-        watch: {
-            inputText: function () {
-                this.translate
+            }, 650),
+            swap () {
+                if (this.source.tag === 'ru') {
+                    this.source.tag = 'it'
+                    this.source.title = 'Italian'
+
+                    this.target.tag = 'ru'
+                    this.target.title = 'Russian'
+                } else {
+                    this.source.tag = 'ru'
+                    this.source.title = 'Russian'
+                    this.target.tag = 'it'
+                    this.target.title = 'Italian'
+                }
+                this.inputText = this.resultText
+                this.translate()
             }
         }
     }
 
 </script>
-
-<!--<style lang="scss">-->
-<!--    @import '../stylus/css/fiddle.css';-->
-<!--</style>-->
