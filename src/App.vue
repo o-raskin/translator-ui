@@ -4,7 +4,7 @@
             <v-toolbar-title class="white--text headline text-uppercase">
                 <span class="font-weight-light">Translator </span> -
                 <span class="font-weight-bold">UI</span>
-                <span class="overline"> 1.0</span>
+                <span class="overline"> 2.0</span>
             </v-toolbar-title>
         </v-app-bar>
 
