@@ -1,5 +1,11 @@
 svg { display: block; }
-polygon { fill: lightskyblue; }
+polygon {
+    fill: rgb(25, 118, 210);
+}
+circle {
+    fill: white;
+    stroke: rgb(182,182,182);
+}
 input[type="range"] {
     display: block;
     width: 100%;

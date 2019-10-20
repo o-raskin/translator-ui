@@ -2,7 +2,10 @@
     <v-container>
         <div id="fiddle" align="center" justify="center">
             <svg width="200" height="200">
-                <polygon :points="points"></polygon>
+                <circle cx="100" cy="100" r="90"></circle>
+                <transition name="fade-transition">
+                    <polygon :points="points"></polygon>
+                </transition>
             </svg>
         </div>
     </v-container>
@@ -14,7 +17,9 @@
     export default {
         el: "#fiddle",
         props: {
-            sides: Number
+            sides: Number,
+            updateInterval: Number,
+            minRadius: Number
         },
         data: function () {
             var stats = Array.apply(
@@ -24,9 +29,7 @@
             return {
                 stats: stats,
                 points: generatePoints(stats),
-                minRadius: 50,
-                interval: null,
-                updateInterval: 500
+                interval: null
             }
         },
         watch: {

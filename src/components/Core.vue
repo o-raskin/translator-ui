@@ -3,10 +3,7 @@
         <v-layout text-center wrap>
             <v-flex>
                 <v-row>
-                    <transition name="fade">
-                        <!--                        v-if="inputText.length !== 0"-->
-                        <Fiddle :sides.sync="sides"/>
-                    </transition>
+                    <Fiddle :sides.sync="sides" :updateInterval.sync="speed" :minRadius.sync="radius"/>
                 </v-row>
                 <v-row align="center" justify="center">
                     <v-alert v-if="inputText.length === 0 && resultText.length === 0" dense type="info" min-width="10%"
@@ -57,6 +54,8 @@
         },
         data: () => ({
             sides: 0,
+            speed: 0,
+            radius: 15,
             inputText: '',
             resultText: '',
             source: {
@@ -76,6 +75,8 @@
         methods: {
             computeWords() {
                 this.sides = _.words(this.inputText).length
+                this.speed = 450
+                this.radius = 15
                 this.translate;
             },
             translate: _.debounce(function () {
@@ -88,6 +89,8 @@
                     })
                     .then((value) => {
                         this.resultText = value.data.translation
+                        this.speed = 950
+                        this.radius = 65
                     })
             }, 650),
             swap() {
@@ -104,6 +107,7 @@
                     this.target.title = 'Italian'
                 }
                 this.inputText = this.resultText
+                this.computeWords()
                 this.translate()
             }
         }
