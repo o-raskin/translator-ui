@@ -22,7 +22,7 @@
                     <v-col md="5">
                         <v-textarea id="source" background-color="white" outlined auto-grow
                                     :label="source.title" counter="true" v-model="inputText"
-                                    :value="source.tag" v-on:input="translate" @input="computeWords">
+                                    :value="source.tag" v-on:input="translate" clearable @click:clear="reset" @input="computeWords">
                         </v-textarea>
                     </v-col>
                     <v-col md="1">
@@ -45,7 +45,7 @@
 <script>
     import axios from 'axios';
     import _ from 'lodash';
-    import Fiddle from './fiddle/Fiddle';
+    import Fiddle from '../fiddle/Fiddle';
 
     export default {
         name: 'Core',
@@ -109,6 +109,11 @@
                 this.inputText = this.resultText
                 this.computeWords()
                 this.translate()
+            },
+            reset() {
+                this.inputText = ''
+                this.resultText = ''
+                this.sides = 0
             }
         }
     }

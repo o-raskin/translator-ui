@@ -2,12 +2,11 @@
     <v-app>
         <v-app-bar class="primary" app>
             <v-toolbar-title class="white--text headline text-uppercase">
-                <span class="font-weight-light">Translator </span> -
-                <span class="font-weight-bold">UI</span>
-                <span class="overline"> 2.0</span>
+                <span class="font-weight-light">{{strings[0]}} </span> -
+                <span class="font-weight-bold">{{strings[1]}} </span>
+                <span class="overline">{{strings[2]}}</span>
             </v-toolbar-title>
         </v-app-bar>
-
         <v-content class="darken-2">
             <Core/>
         </v-content>
@@ -16,8 +15,8 @@
 </template>
 
 <script>
-    import Core from './components/Core';
-    import Footer from './components/Footer';
+    import Core from './components/core/Core';
+    import Footer from './components/footer/Footer';
 
     export default {
         name: 'App',
@@ -25,7 +24,12 @@
             Core,
             Footer
         },
-        data: () => ({})
+        data: () => ({
+            strings: [
+                'Translator',
+                'UI',
+                '2.0'
+            ]
+        })
     }
-
 </script>
