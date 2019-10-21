@@ -46,6 +46,10 @@
     import axios from 'axios';
     import _ from 'lodash';
     import Fiddle from '../fiddle/Fiddle';
+    import {HOST} from "../../properties";
+    import {PORT} from "../../properties";
+    import {PROTOCOL} from "../../properties";
+
 
     export default {
         name: 'Core',
@@ -81,7 +85,7 @@
             },
             translate: _.debounce(function () {
                 axios.post(
-                    `http://localhost:8081/api/translate`,
+                    `${PROTOCOL}://${HOST}:${PORT}/api/translate`,
                     {
                         source_lang: this.source.tag,
                         target_lang: this.target.tag,

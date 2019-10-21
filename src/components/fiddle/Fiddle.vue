@@ -13,9 +13,8 @@
 
 <script>
     import TweenLite from 'gsap/TweenLite';
-    // import {className} from '<file>';
+
     export default {
-        el: "#fiddle",
         props: {
             sides: Number,
             updateInterval: Number,
